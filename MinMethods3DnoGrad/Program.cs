@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 class Program
 {
@@ -20,6 +20,15 @@ class Program
             double currentMin = Function(x, y);
             double xTemp = x;
             double yTemp = y;
+            int count = 0;
+
+            if (iterations != 0)
+            {
+                currentMin = Function(x*2, y*2);
+                xTemp = x*2;
+                yTemp = y*2;
+            }
+           
 
             // Поиск в окрестности текущей точки
             for (int dx = -1; dx <= 1; dx++)
@@ -36,11 +45,16 @@ class Program
                         y = newY;
                         currentMin = newValue;
                     }
+                    if (newValue >= Function(xTemp, yTemp))
+                    {
+                        count++;
+                    }
+
                 }
             }
-
+            if (count != 0)
+                step /= 2;
             // Уменьшение шага
-            step /= 2;
             iterations++;
 
         } while (Math.Abs(Function(x, y) - Function(x + step, y + step)) > epsilon);
